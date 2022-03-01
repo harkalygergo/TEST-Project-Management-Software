@@ -1,0 +1,7 @@
+[database]
+db_name     = localhost_test_pms
+db_user     = 'user'
+db_password = 'pass'
+
+[application]
+app_email = email@domain.tld
