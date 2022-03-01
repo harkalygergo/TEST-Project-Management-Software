@@ -42,5 +42,5 @@ Ezeket nem kötelező elkészíteni, csak extraként vannak a feladatban.
 * Legalább a törlés funkció aszinkron módon, az oldal újratöltése nélkül történjen.
 * 10 projekt jelenjen meg egy oldalon, afeletti projektszám esetén lapozó legyen.
 * A projekteket lehessen státusz szerint szűrni.
-* A rendszer egy projekt módosításakor küldjön automatikus e-mailt a projekthez tartozó kapcsolató számára, amelyben szerepelnek a megváltozott adatok (de csak azok).●
+* A rendszer egy projekt módosításakor küldjön automatikus e-mailt a projekthez tartozó kapcsolattartó számára, amelyben szerepelnek a megváltozott adatok (de csak azok).
 * Ha a feladatot publikus GitHub Repository linkként küldöd vissza.
