@@ -1,5 +1,11 @@
 # TEST: Project Management Software
 
+## Usage
+
+1. Copy `config/config.ini.dist` file as `config.ini` and modify necessary data.
+2. Run `composer install`.
+3. For test result just run `src/Controller/App.php` with PHP (e.g.: `/usr/bin/php /path/to/src/Controller/App.php`).
+
 ## Task
 
 A feladat egy egyszerű projektkezelő rendszer készítése. A feladat elkészítése során a szükséges nyelv a PHP, azon belül is csak a támogatott verziók használhatók. A feladat elkészítéséhez használhatsz

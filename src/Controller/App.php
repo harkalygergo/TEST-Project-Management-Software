@@ -9,8 +9,8 @@ class App
     private ?\Twig\Environment $twig = null;
     private ?ProjectController $projectController = null;
 
-	public function __construct()
-	{
+    public function __construct()
+    {
         $this->projectController = new ProjectController();
         $loader = new \Twig\Loader\FilesystemLoader(__DIR__.'/../../templates');
         $this->twig = new \Twig\Environment($loader);
