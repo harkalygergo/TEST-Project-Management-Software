@@ -16,8 +16,9 @@
                 <div class="mb-3">
                     <label class="form-label" for="statusz">Státusz</label>
                     <select class="form-select" id="statusz" aria-label="Státusz">
-                        {% for status in statuses %}
-                            <option value="{{ status }}">{{ status }}</option>
+                        <option value="">- Válasszon! -</option>
+                        {% for key, status in statuses %}
+                            <option value="{{ key }}"  {% if key==project.status.id %}selected{% endif %}>{{ status }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -29,8 +30,8 @@
                     <label class="form-label required" for="ownerEmail">Kapcsolattartó e-mail címe</label>
                     <input class="form-control" id="ownerEmail" type="text" value="{{ project.owner.email }}" required />
                 </div>
-                <div class="d-grid">
-                    <button class="btn btn-primary" id="submitButton" type="submit">Submit</button>
+                <div class="">
+                    <button class="btn btn-primary" id="submitButton" type="submit">Mentés</button>
                 </div>
             </form>
 
