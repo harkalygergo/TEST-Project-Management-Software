@@ -10,7 +10,7 @@
                     <input class="form-control" id="cim" type="text" value="{{ project.title }}" />
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="description"></label>
+                    <label class="form-label" for="description">Leírás</label>
                     <textarea class="form-control" name="description" id="description">{{ project.description }}</textarea>
                 </div>
                 <div class="mb-3">
@@ -22,12 +22,12 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="kapcsolattartoNeve">Kapcsolattartó neve</label>
-                    <input class="form-control" id="kapcsolattartoNeve" type="text" value="{{ project.owner.name }}" />
+                    <label class="form-label required" for="ownerName">Kapcsolattartó neve</label>
+                    <input class="form-control" id="ownerName" type="text" value="{{ project.owner.name }}" required />
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="kapcsolattartoEMailCime">Kapcsolattartó e-mail címe</label>
-                    <input class="form-control" id="kapcsolattartoEMailCime" type="text" value="{{ project.owner.email }}" />
+                    <label class="form-label required" for="ownerEmail">Kapcsolattartó e-mail címe</label>
+                    <input class="form-control" id="ownerEmail" type="text" value="{{ project.owner.email }}" required />
                 </div>
                 <div class="d-grid">
                     <button class="btn btn-primary" id="submitButton" type="submit">Submit</button>

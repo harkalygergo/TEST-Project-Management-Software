@@ -2,17 +2,18 @@
 
 ## Requirements
 
-* at least PHP 8.0
-* Apache / Nginx
+* at least PHP 7.0
+* Apache // Nginx
 
 ## Usage
 
-1. Copy `config/config.ini.di``st` file as `config.ini` and modify necessary data.
+1. Copy `config/config.ini.dist` file as `config.ini` and modify necessary data.
 2. Run `composer install`.
-3. For test result just run `src/Controller/App.php` with PHP (e.g.: `/usr/bin/php /path/to/src/Controller/App.php`).
+3. Upload files to your server's (for example into `public_html` directory).
+4. Point domain name to `public` directory.
 
 ## Task
-``
+
 **Screenshots and SQL database under `ticket` directory.**
 
 A feladat egy egyszerű projektkezelő rendszer készítése. A feladat elkészítése során a szükséges nyelv a PHP, azon belül is csak a támogatott verziók használhatók. A feladat elkészítéséhez használhatsz
