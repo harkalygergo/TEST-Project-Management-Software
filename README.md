@@ -1,12 +1,19 @@
 # TEST: Project Management Software
 
+## Requirements
+
+* at least PHP 8.0
+* Apache / Nginx
+
 ## Usage
 
-1. Copy `config/config.ini.dist` file as `config.ini` and modify necessary data.
+1. Copy `config/config.ini.di``st` file as `config.ini` and modify necessary data.
 2. Run `composer install`.
 3. For test result just run `src/Controller/App.php` with PHP (e.g.: `/usr/bin/php /path/to/src/Controller/App.php`).
 
 ## Task
+``
+**Screenshots and SQL database under `ticket` directory.**
 
 A feladat egy egyszerű projektkezelő rendszer készítése. A feladat elkészítése során a szükséges nyelv a PHP, azon belül is csak a támogatott verziók használhatók. A feladat elkészítéséhez használhatsz
 Bootstrap-et, Semantic-ot vagy akármilyen CSS framework-öt, de PHP framework-öt (Laravel, Lumen, Symfony, Slim, Zend, stb.) nem. A JS résznél engedélyezve van a nyelvi libek használata (jQuery,
