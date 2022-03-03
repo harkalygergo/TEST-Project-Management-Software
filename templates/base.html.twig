@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Projektlista</a>
+                        <a class="nav-link" aria-current="page" href="/">Projektlista</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Szerkesztés / létrehozás</a>
@@ -37,29 +37,9 @@
 {% block main %}{% endblock %}
 
 <footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        function ajax(url, id)
-        {
-            $.ajax({
-                method: "POST",
-                url: url,
-                data: { id: id }
-            })
-                .done(function(response) {
-                    alert(response);
-                    location.reload();
-                });
-        }
-        function deleteProject(id)
-        {
-            ajax("/?controller=project&action=delete", id);
-        }
-        function editProject(id)
-        {
-	        ajax("/?controller=project&action=edit", id);
-        }
-    </script>
+    {% block javascripts %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {% endblock %}
 </footer>
 </body>
 </html>

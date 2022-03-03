@@ -22,7 +22,7 @@ class StatusController
     public function getStatus($id): Status
     {
         $query = $this->getQuery();
-        $query .= " WHERE ".$this->databaseTable.".id=$id";
+        echo $query .= " WHERE ".$this->databaseTable.".id=$id";
         $result = $this->databaseConnection->getConnection()->query($query)->fetch(\PDO::FETCH_ASSOC);
 
         $status = new Status();

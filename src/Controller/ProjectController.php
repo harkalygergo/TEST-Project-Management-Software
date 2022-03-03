@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Model\Owner;
 use App\Model\Project;
+use App\Model\Status;
 
 class ProjectController
 {
@@ -30,10 +32,9 @@ class ProjectController
         $result = $this->db->getConnection()->query($query)->fetch(\PDO::FETCH_ASSOC);
 
         $statusController = new StatusController();
-        $status = $statusController->getStatus($result['status_id']);
-
         $ownerController = new OwnerController();
-        $owner = $ownerController->getOwner($result['owner_id']);
+        $status = (!is_null($result['status_id'])) ? $statusController->getStatus($result['status_id']) : new Status();
+        $owner = (!is_null($result['owner_id'])) ? $ownerController->getOwner($result['owner_id']) : new Owner();
 
         $project = new Project();
         $project->setId($result['id']);

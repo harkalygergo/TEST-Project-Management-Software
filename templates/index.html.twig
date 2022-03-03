@@ -6,7 +6,7 @@
 
 		<div class="list-group">
 			{% for project in projects %}
-				<a href="/?controller=project&action=edit&id={{ project['id'] }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+				<div id="box{{ project.id }}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
 					<div class="d-flex gap-2 w-100 justify-content-between">
 						<div>
 							<h5 class="mb-3">{{ project['title'] }}</h5>
@@ -15,16 +15,42 @@
 								({{ project['email'] }})
 							</p>
 							<p class="pt-3">
-								<button onclick="editProject({{ project['id'] }});" class="btn btn-primary">Szerkesztés</button>
+								<a href="/?controller=project&action=edit&id={{ project['id'] }}" class="btn btn-primary">Szerkesztés</a>
 								<button onclick="deleteProject({{ project['id'] }});" class="btn btn-danger">Törlés</button>
 							</p>
 						</div>
 						<small class="opacity-50 text-nowrap">{{ statuses[project['status_id']] }}</small>
 					</div>
-				</a>
+				</div>
 			{% endfor %}
 		</div>
 
 	</div>
 </main>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		function ajax(url, id)
+		{
+			$.ajax({
+				method: "POST",
+				url: url,
+				data: { id: id }
+			})
+					.done(function(response) {
+						alert(response);
+						jQuery("#box"+id).remove();
+					});
+		}
+		function deleteProject(id)
+		{
+			ajax("/?controller=project&action=delete", id);
+		}
+		function editProject(id)
+		{
+			ajax("/?controller=project&action=edit", id);
+		}
+	</script>
 {% endblock %}
