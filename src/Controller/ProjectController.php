@@ -52,6 +52,14 @@ class ProjectController
         return $this->db->getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function new()
+    {
+        $project = new Project();
+
+        $app = new AppController();
+        $app->getEditForm($project);
+    }
+
     public function edit()
     {
         $id = $_GET['id'];
