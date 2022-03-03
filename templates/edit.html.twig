@@ -4,14 +4,14 @@
     <main class="flex-shrink-0 pt-5">
         <div class="container">
 
-            <form id="editProject">
+            <form method="post" action="/?controller=project&action=save&id={{ project.id }}">
                 <div class="mb-3">
                     <label class="form-label" for="cim">Cím</label>
-                    <input class="form-control" id="cim" type="text" placeholder="Cím" data-sb-validations="" />
+                    <input class="form-control" id="cim" type="text" value="{{ project.title }}" />
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="newField1">New Field 1</label>
-                    <input class="form-control" id="newField1" type="text" placeholder="New Field 1" data-sb-validations="" />
+                    <label class="form-label" for="description"></label>
+                    <textarea class="form-control" name="description" id="description">{{ project.description }}</textarea>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="statusz">Státusz</label>
@@ -23,12 +23,11 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="kapcsolattartoNeve">Kapcsolattartó neve</label>
-                    <input class="form-control" id="kapcsolattartoNeve" type="text" placeholder="Kapcsolattartó neve" data-sb-validations="" />
+                    <input class="form-control" id="kapcsolattartoNeve" type="text" value="{{ project.owner.name }}" />
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="kapcsolattartoEMailCime">Kapcsolattartó e-mail címe</label>
-                    <input class="form-control" id="kapcsolattartoEMailCime" type="text" placeholder="Kapcsolattartó e-mail címe" data-sb-validations="required" />
-                    <div class="invalid-feedback" data-sb-feedback="kapcsolattartoEMailCime:required">Kapcsolattartó e-mail címe is required.</div>
+                    <input class="form-control" id="kapcsolattartoEMailCime" type="text" value="{{ project.owner.email }}" />
                 </div>
                 <div class="d-grid">
                     <button class="btn btn-primary" id="submitButton" type="submit">Submit</button>

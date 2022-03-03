@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Model\Project;
+
 class AppController
 {
     public function __construct(
@@ -20,10 +22,10 @@ class AppController
         $this->twig->addExtension(new \Twig\Extension\DebugExtension());
     }
 
-    public function editForm()
+    public function getEditForm(Project $project)
     {
         echo $this->twig->render('edit.html.twig', [
-            'project' => [],
+            'project' => $project,
             'statuses' => $this->statusController->getStatuses()
         ]);
     }
