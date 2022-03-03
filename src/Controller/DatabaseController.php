@@ -5,7 +5,7 @@ namespace App\Controller;
 use PDO;
 use PDOException;
 
-class DatabaseConnection
+class DatabaseController extends AbstractConfigController
 {
     public function __construct(
         private ?string $user = null,
@@ -13,11 +13,10 @@ class DatabaseConnection
         private ?object $connection = null
     )
     {
-        $configFile = __DIR__.'/../../config/config.ini';
-        $config = parse_ini_file($configFile, true);
+        parent::__construct();
 
-        $this->user = $config['database']['db_user'];
-        $this->password = $config['database']['db_password'];
+        $this->user = $this->getConfig()['database']['db_user'];
+        $this->password = $this->getConfig()['database']['db_password'];
 
         $this->connection = $this->getConnection();
     }

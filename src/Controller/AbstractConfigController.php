@@ -9,7 +9,14 @@ class AbstractConfigController
     )
     {
         $configFile = __DIR__.'/../../config/config.ini';
-        $this->config = parse_ini_file($configFile, true);
+        if(file_exists($configFile))
+        {
+            $this->config = parse_ini_file($configFile, true);
+        }
+        else
+        {
+            die('First create config/config.ini file!');
+        }
     }
 
     public function getConfig(): ?array

@@ -9,11 +9,11 @@ use App\Model\Status;
 class ProjectController
 {
     public function __construct(
-        private ?DatabaseConnection $databaseConnection = null,
-        private string $databaseTable = 'projects'
+        private ?DatabaseController $databaseConnection = null,
+        private string              $databaseTable = 'projects'
     )
     {
-        $this->db = new DatabaseConnection();
+        $this->db = new DatabaseController();
     }
 
     private function getQuery(): string

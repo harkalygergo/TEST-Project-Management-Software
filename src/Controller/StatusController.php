@@ -7,11 +7,11 @@ use App\Model\Status;
 class StatusController
 {
     public function __construct(
-        private ?DatabaseConnection $databaseConnection = null,
-        private string $databaseTable = 'statuses'
+        private ?DatabaseController $databaseConnection = null,
+        private string              $databaseTable = 'statuses'
     )
     {
-        $this->databaseConnection = new DatabaseConnection();
+        $this->databaseConnection = new DatabaseController();
     }
 
     private function getQuery(): string

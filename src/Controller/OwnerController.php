@@ -8,11 +8,11 @@ use App\Model\Status;
 class OwnerController
 {
     public function __construct(
-        private ?DatabaseConnection $databaseConnection = null,
-        private string $databaseTable = 'owners'
+        private ?DatabaseController $databaseConnection = null,
+        private string              $databaseTable = 'owners'
     )
     {
-        $this->databaseConnection = new DatabaseConnection();
+        $this->databaseConnection = new DatabaseController();
     }
 
     private function getQuery(): string
