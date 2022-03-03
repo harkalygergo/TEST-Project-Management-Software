@@ -20,6 +20,14 @@ class AppController
         $this->twig->addExtension(new \Twig\Extension\DebugExtension());
     }
 
+    public function editForm()
+    {
+        echo $this->twig->render('edit.html.twig', [
+            'project' => [],
+            'statuses' => $this->statusController->getStatuses()
+        ]);
+    }
+
     public function listProjects()
     {
         echo $this->twig->render('index.html.twig', [

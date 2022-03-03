@@ -21,6 +21,12 @@ class ProjectController
         return $this->db->getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function edit()
+    {
+        $app = new AppController();
+        $app->editForm();
+    }
+
     public function delete(int $id)
     {
         $queries = [

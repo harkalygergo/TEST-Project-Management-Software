@@ -14,8 +14,9 @@ if(isset($_GET['controller']))
     {
         case 'project':
         {
+            $id = isset($_POST['id']) ? $_POST['id'] : $_GET['id'];
             $projectController = new \App\Controller\ProjectController();
-            $projectController->$action($_POST['id']);
+            $projectController->$action($id);
             break;
         }
     }
