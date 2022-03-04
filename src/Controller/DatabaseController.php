@@ -5,11 +5,12 @@ namespace App\Controller;
 use PDO;
 use PDOException;
 
-class DatabaseController extends AbstractConfigController
+class DatabaseController extends AbstractController
 {
     public function __construct(
         private ?string $user = null,
         private ?string $password = null,
+        private ?string $dbname = null,
         private ?object $connection = null
     )
     {
@@ -17,6 +18,7 @@ class DatabaseController extends AbstractConfigController
 
         $this->user = $this->getConfig()['database']['db_user'];
         $this->password = $this->getConfig()['database']['db_password'];
+        $this->dbname = $this->getConfig()['database']['db_name'];
 
         $this->connection = $this->getConnection();
     }
@@ -34,7 +36,7 @@ class DatabaseController extends AbstractConfigController
     private function connect()
     {
         try {
-            return new PDO('mysql:host=localhost;dbname=localhost_test_weloveshirts', $this->user, $this->password);
+            return new PDO('mysql:host=localhost;dbname='.$this->dbname, $this->user, $this->password);
         } catch (PDOException $e) {
             print "Error!: " . $e->getMessage() . "<br/>";
             die();
