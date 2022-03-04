@@ -69,9 +69,21 @@ class ProjectController
         $app->getEditForm($project);
     }
 
-    public function save()
+    public function save(?int $id)
     {
-
+        $new = (is_null($id)) ? true : false;
+        // insert
+        if($new)
+        {
+            $query = sprintf("INSERT INTO ".$this->databaseTable." (title, description) VALUES ('%s', '%s')", $_POST['title'], $_POST['description'] );
+            $this->db->getConnection()->query($query);
+            header('Location:/');
+        }
+        // update
+        else
+        {
+            $project = $this->getProject($id);
+        }
     }
 
     public function delete(int $id)

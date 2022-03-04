@@ -6,16 +6,16 @@
 
             <form method="post" action="/?controller=project&action=save&id={{ project.id }}">
                 <div class="mb-3">
-                    <label class="form-label" for="cim">Cím</label>
-                    <input class="form-control" id="cim" type="text" value="{{ project.title }}" />
+                    <label class="form-label" for="title">Cím</label>
+                    <input class="form-control" id="title" name="title" type="text" value="{{ project.title }}" />
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="description">Leírás</label>
                     <textarea class="form-control" name="description" id="description">{{ project.description }}</textarea>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="statusz">Státusz</label>
-                    <select class="form-select" id="statusz" aria-label="Státusz">
+                    <label class="form-label" for="status">Státusz</label>
+                    <select class="form-select" id="status" name="status" aria-label="Státusz">
                         <option value="">- Válasszon! -</option>
                         {% for key, status in statuses %}
                             <option value="{{ key }}"  {% if key==project.status.id %}selected{% endif %}>{{ status }}</option>
@@ -24,11 +24,11 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label required" for="ownerName">Kapcsolattartó neve</label>
-                    <input class="form-control" id="ownerName" type="text" value="{{ project.owner.name }}" required />
+                    <input class="form-control" id="ownerName" name="ownerName" type="text" value="{{ project.owner.name }}" required />
                 </div>
                 <div class="mb-3">
                     <label class="form-label required" for="ownerEmail">Kapcsolattartó e-mail címe</label>
-                    <input class="form-control" id="ownerEmail" type="text" value="{{ project.owner.email }}" required />
+                    <input class="form-control" id="ownerEmail" name="ownerEmail" type="text" value="{{ project.owner.email }}" required />
                 </div>
                 <div class="">
                     <button class="btn btn-primary" id="submitButton" type="submit">Mentés</button>
