@@ -52,8 +52,7 @@ class ProjectController
 
     public function edit(): void
     {
-        $id = $_GET['id'];
-        $project = $this->getProject($id);
+        $project = $this->getProject($_GET['id']);
 
         $app = new AppController();
         $app->getEditForm($project);
