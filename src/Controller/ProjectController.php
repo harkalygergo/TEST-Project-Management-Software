@@ -46,13 +46,13 @@ class ProjectController
         return $project;
     }
 
-    public function getProjects()
+    public function getProjects(): array
     {
         $query = $this->getQuery();
         return $this->db->getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function new()
+    public function new(): void
     {
         $project = new Project();
 
@@ -60,7 +60,7 @@ class ProjectController
         $app->getEditForm($project);
     }
 
-    public function edit()
+    public function edit(): void
     {
         $id = $_GET['id'];
         $project = $this->getProject($id);
@@ -69,24 +69,64 @@ class ProjectController
         $app->getEditForm($project);
     }
 
+    public function insert(array $data)
+    {
+        $paramList = implode(", ", array_keys($data));
+        $columnList = str_replace(':', '', $paramList);
+        $query = "INSERT INTO $this->databaseTable($columnList) VALUES($paramList)";
+        $pdo = $this->db->getConnection()->prepare($query);
+        foreach($data as $key=>&$value)
+        {
+            $pdo->bindParam($key, $value);
+        }
+        $pdo->debugDumpParams();
+        $pdo->execute();
+    }
+
+    public function update(array $data, int $id)
+    {
+        $setsArray = [];
+        foreach($data as $key=>$value)
+        {
+            $setsArray[] = $key.' = :'.$key;
+        }
+        $sets = implode( ', ', $setsArray);
+        $query = "UPDATE ".$this->databaseTable." SET $sets WHERE id=:id";
+        $pdo = $this->db->getConnection()->prepare($query);
+        $pdo->bindParam(':id', $id);
+        foreach($data as $key=>&$value)
+        {
+            $pdo->bindParam($key, $value);
+        }
+        $pdo->debugDumpParams();
+        $pdo->execute();
+    }
+
     public function save(?int $id)
     {
         $new = (is_null($id)) ? true : false;
         // insert
         if($new)
         {
-            $query = sprintf("INSERT INTO ".$this->databaseTable." (title, description) VALUES ('%s', '%s')", $_POST['title'], $_POST['description'] );
-            $this->db->getConnection()->query($query);
-            header('Location:/');
+            $data = [
+                ':title' => $_POST['title'],
+                ':description' => $_POST['description'],
+            ];
+            $this->insert($data);
         }
         // update
         else
         {
-            $project = $this->getProject($id);
+            $data = [
+                'title' => $_POST['title'],
+                'description' => $_POST['description'],
+            ];
+            $this->update($data, $id);
         }
+        header('Location:/');
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $queries = [
             "DELETE FROM project_status_pivot WHERE project_id=$id;",
