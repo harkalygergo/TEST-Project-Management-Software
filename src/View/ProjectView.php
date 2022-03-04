@@ -2,7 +2,6 @@
 
 namespace App\View;
 
-use App\Controller\AppController;
 use App\Controller\ProjectController;
 use App\Controller\StatusController;
 use App\Model\Project;

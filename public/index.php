@@ -5,7 +5,6 @@ require_once __DIR__.'/../vendor/autoload.php';
 use App\Controller\AppController;
 
 $app = new AppController();
-$app->show_errors();
 
 if(isset($_GET['controller']))
 {
@@ -23,5 +22,5 @@ if(isset($_GET['controller']))
 }
 else
 {
-    $app->listProjects();
+    $app->showProjects();
 }
