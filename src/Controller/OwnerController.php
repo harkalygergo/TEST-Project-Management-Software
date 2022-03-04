@@ -15,11 +15,6 @@ class OwnerController
         $this->databaseConnection = new DatabaseController();
     }
 
-    private function getQuery(): string
-    {
-        return "SELECT DISTINCT * FROM ".$this->databaseTable;
-    }
-
     public function getOwner($id): Owner
     {
         $query = $this->getQuery();
@@ -32,5 +27,10 @@ class OwnerController
         $owner->setEmail($result['email']);
 
         return $owner;
+    }
+
+    private function getQuery(): string
+    {
+        return "SELECT DISTINCT * FROM ".$this->databaseTable;
     }
 }

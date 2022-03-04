@@ -14,11 +14,6 @@ class StatusController
         $this->databaseConnection = new DatabaseController();
     }
 
-    private function getQuery(): string
-    {
-        return "SELECT DISTINCT * FROM ".$this->databaseTable;
-    }
-
     public function getStatus($id): Status
     {
         $query = $this->getQuery();
@@ -44,5 +39,10 @@ class StatusController
         }
 
         return $results;
+    }
+
+    private function getQuery(): string
+    {
+        return "SELECT DISTINCT * FROM ".$this->databaseTable;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Manager\DatabaseManager;
 use App\Model\Owner;
 use App\Model\Project;
 use App\Model\Status;
@@ -9,27 +10,16 @@ use App\Model\Status;
 class ProjectController
 {
     public function __construct(
-        private ?DatabaseController $databaseConnection = null,
-        private string              $databaseTable = 'projects'
-    )
-    {
-        $this->db = new DatabaseController();
-    }
-
-    private function getQuery(): string
-    {
-        return "SELECT DISTINCT projects.*, owners.name, owners.email, project_status_pivot.status_id, project_owner_pivot.owner_id FROM projects
-            LEFT JOIN project_owner_pivot ON projects.id=project_owner_pivot.project_id
-            LEFT JOIN owners ON project_owner_pivot.owner_id=owners.id
-            LEFT JOIN project_status_pivot ON projects.id=project_status_pivot.project_id
-        ";
-    }
+        private ?DatabaseController $databaseController = new DatabaseController(),
+        private ?DatabaseManager $databaseManager = new DatabaseManager(),
+        private string $databaseTable = 'projects'
+    ) {}
 
     public function getProject(int $id): Project
     {
         $query = $this->getQuery();
         $query .= " WHERE projects.id=$id";
-        $result = $this->db->getConnection()->query($query)->fetch(\PDO::FETCH_ASSOC);
+        $result = $this->databaseController->getConnection()->query($query)->fetch(\PDO::FETCH_ASSOC);
 
         $statusController = new StatusController();
         $ownerController = new OwnerController();
@@ -49,7 +39,7 @@ class ProjectController
     public function getProjects(): array
     {
         $query = $this->getQuery();
-        return $this->db->getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+        return $this->databaseController->getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public function new(): void
@@ -69,39 +59,6 @@ class ProjectController
         $app->getEditForm($project);
     }
 
-    public function insert(array $data)
-    {
-        $paramList = implode(", ", array_keys($data));
-        $columnList = str_replace(':', '', $paramList);
-        $query = "INSERT INTO $this->databaseTable($columnList) VALUES($paramList)";
-        $pdo = $this->db->getConnection()->prepare($query);
-        foreach($data as $key=>&$value)
-        {
-            $pdo->bindParam($key, $value);
-        }
-        $pdo->debugDumpParams();
-        $pdo->execute();
-    }
-
-    public function update(array $data, int $id)
-    {
-        $setsArray = [];
-        foreach($data as $key=>$value)
-        {
-            $setsArray[] = $key.' = :'.$key;
-        }
-        $sets = implode( ', ', $setsArray);
-        $query = "UPDATE ".$this->databaseTable." SET $sets WHERE id=:id";
-        $pdo = $this->db->getConnection()->prepare($query);
-        $pdo->bindParam(':id', $id);
-        foreach($data as $key=>&$value)
-        {
-            $pdo->bindParam($key, $value);
-        }
-        $pdo->debugDumpParams();
-        $pdo->execute();
-    }
-
     public function save(?int $id)
     {
         $new = (is_null($id)) ? true : false;
@@ -112,7 +69,7 @@ class ProjectController
                 ':title' => $_POST['title'],
                 ':description' => $_POST['description'],
             ];
-            $this->insert($data);
+            $this->databaseManager->insert($this->databaseTable, $data);
         }
         // update
         else
@@ -121,7 +78,7 @@ class ProjectController
                 'title' => $_POST['title'],
                 'description' => $_POST['description'],
             ];
-            $this->update($data, $id);
+            $this->databaseManager->update($this->databaseTable, $data, $id);
         }
         header('Location:/');
     }
@@ -135,8 +92,17 @@ class ProjectController
         ];
         foreach($queries as $query)
         {
-            $this->db->getConnection()->query($query);
+            $this->databaseController->getConnection()->query($query);
         }
         echo 'sikeres törlés';
+    }
+
+    private function getQuery(): string
+    {
+        return "SELECT DISTINCT projects.*, owners.name, owners.email, project_status_pivot.status_id, project_owner_pivot.owner_id FROM projects
+            LEFT JOIN project_owner_pivot ON projects.id=project_owner_pivot.project_id
+            LEFT JOIN owners ON project_owner_pivot.owner_id=owners.id
+            LEFT JOIN project_status_pivot ON projects.id=project_status_pivot.project_id
+        ";
     }
 }
