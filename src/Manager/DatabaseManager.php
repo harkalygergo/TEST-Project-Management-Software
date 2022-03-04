@@ -4,11 +4,17 @@ namespace App\Manager;
 
 use App\Controller\DatabaseController;
 
-class DatabaseManager
+class DatabaseManager implements DatabaseManagerInterface
 {
     public function __construct(
         private ?DatabaseController $databaseConnection = new DatabaseController()
     ) {}
+
+    public function query(string $query)
+    {
+        $pdo = $this->connection()->prepare($query);
+        return $pdo->execute();
+    }
 
     public function insert(string $table, array $data)
     {
