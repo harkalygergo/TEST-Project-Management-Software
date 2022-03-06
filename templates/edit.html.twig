@@ -15,7 +15,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="status">Státusz</label>
-                    <select class="form-select" id="status" name="status" aria-label="Státusz">
+                    <select class="form-select" id="status" name="status" aria-label="Státusz" required>
                         <option value="">- Válasszon! -</option>
                         {% for key, status in statuses %}
                             <option value="{{ key }}"  {% if key==project.status.id %}selected{% endif %}>{{ status }}</option>
@@ -31,7 +31,7 @@
                         <div class="mb-3">
                             <label class="form-label required" for="owner">Kapcsolattartó neve és e-mail címe</label>
 
-                            <select class="form-select" id="owner" name="owner" aria-label="Kapcsolattartó">
+                            <select class="form-select" id="owner" name="owner" aria-label="Kapcsolattartó" required>
                                 <option value="">- Válasszon! -</option>
                                 {% for key, owner in owners %}
                                     <option value="{{ key }}"  {% if key==project.owner.id %}selected{% endif %}>{{ owner }}</option>

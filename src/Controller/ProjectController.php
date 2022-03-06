@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Manager\DatabaseManager;
 use App\Model\Owner;
 use App\Model\Project;
+use App\Model\ProjectOwnerPivot;
 use App\Model\ProjectStatusPivot;
 use App\Model\Status;
 
@@ -79,11 +80,12 @@ class ProjectController
                 ':project_id' => $lastInsertId,
                 ':status_id' => $_POST['status'],
             ];
-            $lastInsertId = $this->databaseManager->insert($projectStatusPivot::TABLE, $data);
+            $this->databaseManager->insert($projectStatusPivot::TABLE, $data);
         }
         // update
         else
         {
+            $project = $this->getProject($id);
             // save project
             $data = [
                 'title' => $_POST['title'],
@@ -92,12 +94,26 @@ class ProjectController
             $this->databaseManager->update($project::TABLE, $data, ' WHERE id='.$id);
 
             // status pivot
-            $currentStatus = $this->getProject($id)->getStatus()->getId();
-            $data = [
-                'project_id' => $id,
-                'status_id' => $_POST['status'],
-            ];
-            $this->databaseManager->update($projectStatusPivot::TABLE, $data, " WHERE project_id=$id AND status_id=$currentStatus");
+            $currentStatus = $project->getStatus()->getId();
+            if((int)$currentStatus!==(int)$_POST['status'])
+            {
+                $data = [
+                    'project_id' => $id,
+                    'status_id' => $_POST['status'],
+                ];
+                $this->databaseManager->update($projectStatusPivot::TABLE, $data, " WHERE project_id=$id AND status_id=$currentStatus");
+            }
+
+            // owner pivot
+            $currentOwner = $project->getOwner()->getId();
+            if((int)$currentOwner!==(int)$_POST['owner'])
+            {
+                $data = [
+                    'project_id' => $id,
+                    'owner_id' => $_POST['owner'],
+                ];
+                $this->databaseManager->update((new ProjectOwnerPivot())::TABLE, $data, " WHERE project_id=$id AND owner_id=$currentOwner");
+            }
         }
         header('Location:/');
     }
