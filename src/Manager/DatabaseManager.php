@@ -29,7 +29,7 @@ class DatabaseManager implements DatabaseManagerInterface
         $pdo->execute();
     }
 
-    public function update(string $table, array $data, int $id)
+    public function update(string $table, array $data, string $where='')
     {
         $setsArray = [];
         foreach($data as $key=>$value)
@@ -37,9 +37,8 @@ class DatabaseManager implements DatabaseManagerInterface
             $setsArray[] = $key.' = :'.$key;
         }
         $sets = implode( ', ', $setsArray);
-        $query = "UPDATE $table SET $sets WHERE id=:id";
+        $query = "UPDATE $table SET $sets $where";
         $pdo = $this->connection()->prepare($query);
-        $pdo->bindParam(':id', $id);
         foreach($data as $key=>&$value)
         {
             $pdo->bindParam($key, $value);

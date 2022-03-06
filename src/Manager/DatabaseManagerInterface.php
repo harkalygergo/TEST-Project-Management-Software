@@ -6,5 +6,5 @@ interface DatabaseManagerInterface
 {
     public function insert(string $table, array $data);
 
-    public function update(string $table, array $data, int $id);
+    public function update(string $table, array $data, string $where);
 }

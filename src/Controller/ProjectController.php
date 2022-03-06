@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Manager\DatabaseManager;
 use App\Model\Owner;
 use App\Model\Project;
+use App\Model\ProjectStatus;
 use App\Model\Status;
 
 class ProjectController
@@ -64,6 +65,7 @@ class ProjectController
         // insert
         if($new)
         {
+            // save project
             $data = [
                 ':title' => $_POST['title'],
                 ':description' => $_POST['description'],
@@ -73,11 +75,21 @@ class ProjectController
         // update
         else
         {
+            // save project
             $data = [
                 'title' => $_POST['title'],
                 'description' => $_POST['description'],
             ];
-            $this->databaseManager->update($this->databaseTable, $data, $id);
+            $this->databaseManager->update($this->databaseTable, $data, ' WHERE id='.$id);
+
+            // status pivot
+            $currentStatus = $this->getProject($id)->getStatus()->getId();
+            $projectStatus = new ProjectStatus();
+            $data = [
+                'project_id' => $id,
+                'status_id' => $_POST['status'],
+            ];
+            $this->databaseManager->update($projectStatus::TABLE, $data, " WHERE project_id=$id AND status_id=$currentStatus");
         }
         header('Location:/');
     }
