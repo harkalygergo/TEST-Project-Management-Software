@@ -10,6 +10,7 @@ class AppController
     public function __construct(
         private ?ProjectView $projectView = new ProjectView(),
         private ?StatusController $statusController = null,
+        private ?OwnerController $ownerController = new OwnerController(),
         private ?\Twig\Environment $twig = null
     )
     {
@@ -26,7 +27,8 @@ class AppController
     {
         echo $this->twig->render('edit.html.twig', [
             'project' => $project,
-            'statuses' => $this->statusController->getStatuses()
+            'statuses' => $this->statusController->getStatuses(),
+            'owners' => $this->ownerController->getOwners()
         ]);
     }
 

@@ -29,6 +29,21 @@ class OwnerController
         return $owner;
     }
 
+    public function getOwners(): array
+    {
+        $owner = new Owner();
+
+        $query = $this->getQuery($owner);
+        $owners = $this->databaseConnection->getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+        $results = [];
+        foreach($owners as $owner)
+        {
+            $results[$owner['id']] = $owner['name'].' ('.$owner['email'].')';
+        }
+
+        return $results;
+    }
+
     private function getQuery($owner): string
     {
         return "SELECT DISTINCT * FROM ".$owner::TABLE;

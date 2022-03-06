@@ -22,14 +22,31 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label required" for="ownerName">Kapcsolattartó neve</label>
-                    <input class="form-control" id="ownerName" name="ownerName" type="text" value="{{ project.owner.name }}" required />
+                <div class="row mt-4 mb-4">
+                    <div class="col-sm-12">
+                        <h4>Kapcsolattartó</h4>
+                    </div>
+                    <div class="col-sm-6">
+                        <h5>Választás a meglévőek közül</h5>
+                        <div class="mb-3">
+                            <label class="form-label required" for="owner">Kapcsolattartó neve és e-mail címe</label>
+
+                            <select class="form-select" id="owner" name="owner" aria-label="Kapcsolattartó">
+                                <option value="">- Válasszon! -</option>
+                                {% for key, owner in owners %}
+                                    <option value="{{ key }}"  {% if key==project.owner.id %}selected{% endif %}>{{ owner }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 text-center">
+                        <button type="button" class="btn btn-lg btn-success mt-5" data-toggle="modal" data-target="#addNewOwnerModal" onclick="$('#addNewOwnerModal').modal('show');">
+                            &plus; Új kapcsolattartó hozzáadása
+                        </button>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label required" for="ownerEmail">Kapcsolattartó e-mail címe</label>
-                    <input class="form-control" id="ownerEmail" name="ownerEmail" type="text" value="{{ project.owner.email }}" required />
-                </div>
+
+
                 <div class="">
                     <button class="btn btn-primary" id="submitButton" type="submit">Mentés</button>
                 </div>
@@ -38,4 +55,25 @@
 
         </div>
     </main>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addNewOwnerModal" tabindex="-1" role="dialog" aria-labelledby="addNewOwnerModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNewOwnerModalLabel">Új kapcsolattartó hozzáadása</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Mentés</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
