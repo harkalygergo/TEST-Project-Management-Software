@@ -4,6 +4,8 @@ namespace App\Model;
 
 class Status
 {
+    const TABLE = 'statuses';
+
     public function __construct(
         private ?int $id = null,
         private ?string $key = null,

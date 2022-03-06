@@ -16,11 +16,12 @@ class StatusController
 
     public function getStatus($id): Status
     {
-        $query = $this->getQuery();
+        $status = new Status();
+
+        $query = $this->getQuery($status);
         $query .= " WHERE ".$this->databaseTable.".id=$id";
         $result = $this->databaseConnection->getConnection()->query($query)->fetch(\PDO::FETCH_ASSOC);
 
-        $status = new Status();
         $status->setId($id);
         $status->setName($result['name']);
         $status->setKey($result['key']);
@@ -30,7 +31,9 @@ class StatusController
 
     public function getStatuses(): array
     {
-        $query = $this->getQuery();
+        $status = new Status();
+
+        $query = $this->getQuery($status);
         $statuses = $this->databaseConnection->getConnection()->query($query)->fetchAll(\PDO::FETCH_ASSOC);
         $results = [];
         foreach($statuses as $status)
@@ -41,8 +44,8 @@ class StatusController
         return $results;
     }
 
-    private function getQuery(): string
+    private function getQuery($status): string
     {
-        return "SELECT DISTINCT * FROM ".$this->databaseTable;
+        return "SELECT DISTINCT * FROM ".$status::TABLE;
     }
 }

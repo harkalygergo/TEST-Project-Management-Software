@@ -8,8 +8,7 @@ use App\Model\Status;
 class OwnerController
 {
     public function __construct(
-        private ?DatabaseController $databaseConnection = null,
-        private string              $databaseTable = 'owners'
+        private ?DatabaseController $databaseConnection = null
     )
     {
         $this->databaseConnection = new DatabaseController();
@@ -17,11 +16,12 @@ class OwnerController
 
     public function getOwner($id): Owner
     {
-        $query = $this->getQuery();
-        $query .= " WHERE ".$this->databaseTable.".id=$id";
+        $owner = new Owner();
+
+        $query = $this->getQuery($owner);
+        $query .= " WHERE ".$owner::TABLE.".id=$id";
         $result = $this->databaseConnection->getConnection()->query($query)->fetch(\PDO::FETCH_ASSOC);
 
-        $owner = new Owner();
         $owner->setId($result['id']);
         $owner->setName($result['name']);
         $owner->setEmail($result['email']);
@@ -29,8 +29,8 @@ class OwnerController
         return $owner;
     }
 
-    private function getQuery(): string
+    private function getQuery($owner): string
     {
-        return "SELECT DISTINCT * FROM ".$this->databaseTable;
+        return "SELECT DISTINCT * FROM ".$owner::TABLE;
     }
 }

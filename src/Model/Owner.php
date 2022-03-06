@@ -4,6 +4,8 @@ namespace App\Model;
 
 class Owner
 {
+    const TABLE = 'owners';
+
     public function __construct(
         private ?int $id = null,
         private ?string $name = null,

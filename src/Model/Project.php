@@ -4,6 +4,8 @@ namespace App\Model;
 
 class Project
 {
+    const TABLE = 'projects';
+
     public function __construct(
         private ?int $id = null,
         private ?string $title = null,

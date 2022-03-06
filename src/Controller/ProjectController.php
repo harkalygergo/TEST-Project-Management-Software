@@ -12,8 +12,7 @@ class ProjectController
 {
     public function __construct(
         private ?DatabaseController $databaseController = new DatabaseController(),
-        private ?DatabaseManager $databaseManager = new DatabaseManager(),
-        private string $databaseTable = 'projects'
+        private ?DatabaseManager $databaseManager = new DatabaseManager()
     ) {}
 
     public function getProject(int $id): Project
@@ -61,6 +60,8 @@ class ProjectController
 
     public function save(?int $id)
     {
+        $project = new Project();
+
         $new = (is_null($id)) ? true : false;
         $projectStatusPivot = new ProjectStatusPivot();
         // insert
@@ -71,7 +72,7 @@ class ProjectController
                 ':title' => $_POST['title'],
                 ':description' => $_POST['description'],
             ];
-            $lastInsertId = $this->databaseManager->insert($this->databaseTable, $data);
+            $lastInsertId = $this->databaseManager->insert($project::TABLE, $data);
 
             // status pivot
             $data = [
@@ -88,7 +89,7 @@ class ProjectController
                 'title' => $_POST['title'],
                 'description' => $_POST['description'],
             ];
-            $this->databaseManager->update($this->databaseTable, $data, ' WHERE id='.$id);
+            $this->databaseManager->update($project::TABLE, $data, ' WHERE id='.$id);
 
             // status pivot
             $currentStatus = $this->getProject($id)->getStatus()->getId();
