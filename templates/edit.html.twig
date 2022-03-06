@@ -67,11 +67,20 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Mentés</button>
+                    <form method="post" action="/?controller=owner&action=save&id=0">
+                        <div class="mb-3">
+                            <label class="form-label" for="ownerName">Név</label>
+                            <input class="form-control" id="ownerName" name="ownerName" type="text" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="ownerEmail">E-mail</label>
+                            <input class="form-control" id="ownerEmail" name="ownerEmail" type="email" />
+                        </div>
+                        <div class="">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Mentés</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
