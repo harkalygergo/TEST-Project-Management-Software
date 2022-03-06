@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Manager\DatabaseManager;
 use App\Model\Owner;
 use App\Model\Project;
-use App\Model\ProjectStatus;
+use App\Model\ProjectStatusPivot;
 use App\Model\Status;
 
 class ProjectController
@@ -62,6 +62,7 @@ class ProjectController
     public function save(?int $id)
     {
         $new = (is_null($id)) ? true : false;
+        $projectStatusPivot = new ProjectStatusPivot();
         // insert
         if($new)
         {
@@ -70,7 +71,14 @@ class ProjectController
                 ':title' => $_POST['title'],
                 ':description' => $_POST['description'],
             ];
-            $this->databaseManager->insert($this->databaseTable, $data);
+            $lastInsertId = $this->databaseManager->insert($this->databaseTable, $data);
+
+            // status pivot
+            $data = [
+                ':project_id' => $lastInsertId,
+                ':status_id' => $_POST['status'],
+            ];
+            $lastInsertId = $this->databaseManager->insert($projectStatusPivot::TABLE, $data);
         }
         // update
         else
@@ -84,12 +92,11 @@ class ProjectController
 
             // status pivot
             $currentStatus = $this->getProject($id)->getStatus()->getId();
-            $projectStatus = new ProjectStatus();
             $data = [
                 'project_id' => $id,
                 'status_id' => $_POST['status'],
             ];
-            $this->databaseManager->update($projectStatus::TABLE, $data, " WHERE project_id=$id AND status_id=$currentStatus");
+            $this->databaseManager->update($projectStatusPivot::TABLE, $data, " WHERE project_id=$id AND status_id=$currentStatus");
         }
         header('Location:/');
     }

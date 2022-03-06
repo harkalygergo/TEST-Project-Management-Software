@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class ProjectStatus
+class ProjectStatusPivot
 {
     const TABLE = 'project_status_pivot';
 

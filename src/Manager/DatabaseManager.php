@@ -27,6 +27,7 @@ class DatabaseManager implements DatabaseManagerInterface
             $pdo->bindParam($key, $value);
         }
         $pdo->execute();
+        return $this->connection()->lastInsertId();
     }
 
     public function update(string $table, array $data, string $where='')
